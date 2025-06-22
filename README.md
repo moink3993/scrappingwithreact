@@ -61,9 +61,48 @@ The application uses environment variables for configuration:
 
 ## Deployment to Render
 
-This application has been configured for deployment to Render.com.
+This application can be deployed to Render.com using either free or paid tiers.
 
-### Deployment Steps
+### Free Tier Deployment
+
+To deploy on Render's free tier without using the Blueprint:
+
+1. Push this repository to GitHub
+2. Sign up for a Render account at https://render.com if you don't have one
+
+3. **Deploy the Backend:**
+   - In Render dashboard, select "New Web Service"
+   - Connect your GitHub account and select this repository
+   - Configure the service:
+     - Name: `waqf-scraper-backend` (or your preferred name)
+     - Environment: `Node`
+     - Build Command: `cd backend && npm install`
+     - Start Command: `cd backend && npm start`
+     - Select "Free" plan
+     - Under Advanced, add these environment variables:
+       - `NODE_ENV`: `production`
+       - `PORT`: `10000`
+   - Click "Create Web Service"
+
+4. **Deploy the Frontend:**
+   - Go back to dashboard and select "New Static Site"
+   - Connect to the same GitHub repository
+   - Configure:
+     - Name: `waqf-scraper-frontend` (or preferred name)
+     - Build Command: `npm install && npm run build`
+     - Publish Directory: `build`
+     - Add environment variable:
+       - `REACT_APP_API_URL`: URL of your backend service (e.g., `https://waqf-scraper-backend.onrender.com`)
+   - Click "Create Static Site"
+
+5. **Free Tier Limitations:**
+   - No persistent storage (files will be temporary and deleted when the service restarts)
+   - Services spin down after 15 minutes of inactivity (cold starts when you access after inactivity)
+   - Limited compute resources
+
+### Paid Tier Deployment (Blueprint Method)
+
+For production deployment with persistent storage:
 
 1. Push this repository to GitHub
 2. Connect your GitHub account to Render
